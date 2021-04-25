@@ -8,6 +8,7 @@ try:
     for msg in consumer:
         print(msg.value.decode('utf-8'))
         print(msg.key.decode('utf-8'))
+        # need to commit after processing as auto_commit is False
         consumer.commit()
 except Exception as e:
     print(e)
