@@ -22,6 +22,17 @@ class CustomPartitioner:
         return random.choice(all_partitions)
 
 
+@app.route("/createTopic/<topicname>/")
+def create(topicname):
+    from kafka import KafkaAdminClient
+    from kafka.admin import NewTopic
+    kac = KafkaAdminClient(bootstrap_servers='localhost:9092')
+    kac.create_topics(new_topics=[NewTopic(name=topicname, num_partitions=1, replication_factor=1)])
+    info_message = 'Created ' + topicname
+    print(info_message)
+    return info_message
+
+
 @app.route("/publishToTopic/<topic>/<message>/<key>")
 def publish(topic, message, key):
     from kafka import KafkaProducer
